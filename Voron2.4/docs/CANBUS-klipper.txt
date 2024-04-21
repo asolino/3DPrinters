@@ -1,0 +1,45 @@
+CAN BOOT en EBB
+https://maz0r.github.io/klipper_canbus/toolhead/ebb36-42_v1.1.html
+Bajalo de https://github.com/Arksine/CanBoot
+pi@can:~/src/CanBoot/scripts $ sudo dfu-util -a 0 -D ../out/canboot.bin --dfuse-address 0x08000000:force:mass-erase:leave -d 0483:df11
+----
+
+1. Compilar EBB.
+2. Make menuconfig
+Processor STM32G0B1
+Bootloader offset 8k
+Clock reference 8Mhz crystal
+Communication Interface PB0/PB1
+500000kb speed
+3.Flash EBB
+service klipper stop
+./flash_can.py -i can0 -q -v
+python3 ~/src/CanBoot/scripts/flash_can.py -i can0 -f ~/klipper/out/klipper.bin -u deee4384d791
+service klipper restart 
+
+-----
+
+STK3 compile
+
+1. make menuconfig
+Architecture: LPC176x
+Model: 100Mhz
+Bootloader offset: 16kb
+Communication interface: USB
+
+2. make flash FLASH_DEVICE=/dev/serial/by-path/platform-fd500000.pcie-pci-0000\:01\:00.0-usb-0\:1.3\:1.0
+
+
+-----
+
+Si se rompe todo.. 
+1. copiar ultima version de https://github.com/Arksine/LPC17xx-DFU-Bootloader/releases
+2. usb -> firmware.bin
+3. Shutdown
+4. Turn on
+5. Shutdown
+6. Profit
+
+more data: https://docs.vorondesign.com/community/howto/kage-chan/installing_better_bootloader.html
+
+
