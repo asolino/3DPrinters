@@ -1,7 +1,10 @@
 CAN BOOT en EBB
+https://canbus.esoterical.online/
 https://maz0r.github.io/klipper_canbus/toolhead/ebb36-42_v1.1.html
 Bajalo de https://github.com/Arksine/CanBoot
-pi@can:~/src/CanBoot/scripts $ sudo dfu-util -a 0 -D ../out/canboot.bin --dfuse-address 0x08000000:force:mass-erase:leave -d 0483:df11
+sudo dfu-util -R -a 0 -s 0x08000000:mass-erase:force:leave -D out/katapult.bin -d 0483:df11
+
+
 ----
 
 1. Compilar EBB.
@@ -13,8 +16,8 @@ Communication Interface PB0/PB1
 500000kb speed
 3.Flash EBB
 service klipper stop
-./flash_can.py -i can0 -q -v
-python3 ~/src/CanBoot/scripts/flash_can.py -i can0 -f ~/klipper/out/klipper.bin -u deee4384d791
+python3 flashtool.py -i can0 -q
+python3 flashtool.py -i can0 -f ~/klipper/out/klipper.bin -u 716058d45e35
 service klipper restart 
 
 -----
